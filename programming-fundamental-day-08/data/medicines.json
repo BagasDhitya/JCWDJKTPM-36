@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "medicineCode": "MED-1001",
+      "medicineName": "Paracetamol 500mg",
+      "category": "generic",
+      "description": "Used to relieve mild to moderate pain and reduce fever.",
+      "stockQuantity": 350
+    },
+    {
+      "medicineCode": "MED-1002",
+      "medicineName": "Amoxicillin 500mg",
+      "category": "prescription",
+      "description": "Antibiotic used for treating various bacterial infections.",
+      "stockQuantity": 180
+    },
+    {
+      "medicineCode": "MED-1003",
+      "medicineName": "Clobazam 10mg",
+      "category": "restricted",
+      "description": "A benzodiazepine used for treating seizures and severe anxiety.",
+      "stockQuantity": 60
+    },
+    {
+      "medicineCode": "MED-1004",
+      "medicineName": "Loratadine 10mg",
+      "category": "generic",
+      "description": "Antihistamine used to relieve allergy symptoms such as sneezing and runny nose.",
+      "stockQuantity": 220
+    },
+    {
+      "medicineCode": "MED-1005",
+      "medicineName": "Metformin 850mg",
+      "category": "prescription",
+      "description": "Used to control blood sugar levels in type 2 diabetes patients.",
+      "stockQuantity": 140
+    }
+  ]
+}

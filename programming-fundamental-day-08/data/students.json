@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Emily Johnson",
+      "age": 22,
+      "classCode": "JCWD-3204"
+    },
+    {
+      "id": 2,
+      "name": "Michael Thompson",
+      "age": 24,
+      "classCode": "JCVD-206"
+    },
+    {
+      "id": 3,
+      "name": "Samantha Lee",
+      "age": 21,
+      "classCode": "JCDM-8712"
+    },
+    {
+      "id": 4,
+      "name": "Daniel Harris",
+      "age": 23,
+      "classCode": "JCDS-445"
+    },
+    {
+      "id": 5,
+      "name": "Olivia Martinez",
+      "age": 25,
+      "classCode": "JCWD-1198"
+    }
+  ]
+}

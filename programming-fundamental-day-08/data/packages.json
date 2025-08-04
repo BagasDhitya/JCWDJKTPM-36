@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "waybill": "WBX123456789",
+      "packageName": "Electronics - Bluetooth Speaker",
+      "packageType": "Standard",
+      "originCity": "Jakarta",
+      "destinationCity": "Surabaya",
+      "deliveryStatus": "In Transit"
+    },
+    {
+      "waybill": "WBX987654321",
+      "packageName": "Fashion - Women's Jacket",
+      "packageType": "Express",
+      "originCity": "Bandung",
+      "destinationCity": "Yogyakarta",
+      "deliveryStatus": "Delivered"
+    },
+    {
+      "waybill": "WBX567891234",
+      "packageName": "Books - Programming Guide",
+      "packageType": "Economy",
+      "originCity": "Semarang",
+      "destinationCity": "Malang",
+      "deliveryStatus": "Pending Pickup"
+    },
+    {
+      "waybill": "WBX321456789",
+      "packageName": "Health - Vitamin C Supplement",
+      "packageType": "Standard",
+      "originCity": "Medan",
+      "destinationCity": "Jakarta",
+      "deliveryStatus": "Out for Delivery"
+    },
+    {
+      "waybill": "WBX654789123",
+      "packageName": "Home Appliance - Rice Cooker",
+      "packageType": "Express",
+      "originCity": "Surabaya",
+      "destinationCity": "Makassar",
+      "deliveryStatus": "Returned to Sender"
+    }
+  ]
+}
