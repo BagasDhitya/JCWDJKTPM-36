@@ -1,0 +1,34 @@
+FUNCTION isPalindrome(sentence, ignoreSpaces, ignoreCase)
+
+    SET cleanSentence TO empty string
+
+    FOR each character in sentence DO
+        SET charCode TO ASCII code of character
+
+        IF ignoreSpaces IS TRUE AND character IS a space THEN
+            CONTINUE to next character
+        END IF
+
+        IF ignoreCase IS TRUE AND character IS an uppercase letter THEN
+            CONVERT character to lowercase manually
+            ADD lowercase character TO cleanSentence
+        ELSE
+            ADD character TO cleanSentence
+        END IF
+    END FOR
+
+    SET left TO 0
+    SET right TO length of cleanSentence - 1
+
+    WHILE left < right DO
+        IF character at position left ≠ character at position right THEN
+            RETURN false
+        END IF
+
+        INCREMENT left by 1
+        DECREMENT right by 1
+    END WHILE
+
+    RETURN true
+
+END FUNCTION
