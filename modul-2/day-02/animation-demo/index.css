@@ -1,0 +1,48 @@
+body {
+    padding:30px;
+}
+
+h2 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.demo-box {
+    width:100px;
+    height:100px;
+    background-color: #3498db;
+    margin:20px auto;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.translate-2d {
+    transition: transform 1.5s ease;
+}
+
+.translate-2d:hover {
+    transform: translate(150px, 150px);
+}
+
+.rotate-2d {
+    transition: transform 1.5s ease;
+}
+
+.rotate-2d:hover {
+    transform: rotate(45deg)
+}
+
+.translate-3d {
+    perspective: 750px;
+}
+
+.translate-3d .box {
+    transition: transform 1.5s
+}
+
+.translate-3d:hover .box {
+    transform: translateX(250px) rotateY(105deg)
+}

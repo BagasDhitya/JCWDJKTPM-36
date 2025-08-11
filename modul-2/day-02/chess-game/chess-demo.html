@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simple Chess — Single File</title>
+    <style>
+        :root {
+            --light: #f0d9b5;
+            --dark: #b58863;
+            --accent: #ffd54f
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Inter, system-ui, Segoe UI, Arial;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f1722;
+            color: #fff
+        }
+
+        .wrap {
+            width: min(920px, 96vw);
+            padding: 18px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.7)
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px
+        }
+
+        header h1 {
+            font-size: 18px;
+            margin: 0
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: inherit;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer
+        }
+
+        .board-wrap {
+            display: flex;
+            gap: 16px
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 64px);
+            grid-template-rows: repeat(8, 64px);
+            gap: 0;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .cell {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .cell.light {
+            background: var(--light);
+            color: #222
+        }
+
+        .cell.dark {
+            background: var(--dark);
+            color: #222
+        }
+
+        .cell.highlight {
+            outline: 4px solid rgba(255, 213, 79, 0.6);
+            z-index: 2
+        }
+
+        .cell.capture {
+            outline: 4px solid rgba(239, 68, 68, 0.6)
+        }
+
+        .side {
+            min-width: 220px
+        }
+
+        .info {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 8px
+        }
+
+        .turn {
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .captured {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px
+        }
+
+        .small {
+            font-size: 13px;
+            color: #cbd5e1
+        }
+
+        @media (max-width:820px) {
+            .board {
+                grid-template-columns: repeat(8, 44px);
+                grid-template-rows: repeat(8, 44px)
+            }
+
+            .cell {
+                width: 44px;
+                height: 44px;
+                font-size: 22px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>Simple Chess — Single File (Click to move)</h1>
+            <div>
+                <button id="btnRestart">Restart</button>
+            </div>
+        </header>
+
+        <div class="board-wrap">
+            <div id="board" class="board" aria-label="Chess board"></div>
+
+            <div class="side">
+                <div class="info">
+                    <div class="turn" id="turnText">Turn: White</div>
+                    <div class="small">Captured by White</div>
+                    <div id="capWhite" class="captured"></div>
+                    <div style="height:8px"></div>
+                    <div class="small">Captured by Black</div>
+                    <div id="capBlack" class="captured"></div>
+                </div>
+                <div class="info" style="margin-top:12px">
+                    <div class="small">Rules implemented:</div>
+                    <ul class="small">
+                        <li>Legal moves for all pieces (basic)</li>
+                        <li>Captures and turn enforcement</li>
+                        <li>Pawn initial double-step & promotion (to Queen via prompt)</li>
+                        <li>No check/checkmate detection, no castling, no en-passant</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple chess implementation (no castling, no en-passant, no check detection)
+        (function () {
+            const boardEl = document.getElementById('board');
+            const turnText = document.getElementById('turnText');
+            const capWhite = document.getElementById('capWhite');
+            const capBlack = document.getElementById('capBlack');
+            const btnRestart = document.getElementById('btnRestart');
+
+            // Unicode pieces
+            const PIECES = {
+                p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚',
+                P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
+            };
+
+            // initial board using FEN-like rows
+            const START = [
+                'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
+                'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
+                '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '',
+                'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
+                'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
+            ];
+
+            let state = {
+                board: [], // 64 array
+                selected: null, // index
+                turn: 'w', // 'w' or 'b'
+                capturedW: [],
+                capturedB: []
+            };
+
+            function idx(r, c) { return r * 8 + c; }
+
+            function coord(i) { return [Math.floor(i / 8), i % 8]; }
+
+            function inBoard(r, c) { return r >= 0 && r < 8 && c >= 0 && c < 8; }
+
+            function isWhitePiece(p) { return p && p === p.toUpperCase(); }
+            function isBlackPiece(p) { return p && p === p.toLowerCase(); }
+
+            function setup() {
+                state.board = START.slice();
+                state.selected = null; state.turn = 'w'; state.capturedW = []; state.capturedB = [];
+                renderBoard(); renderCaptured(); updateTurn();
+            }
+
+            function renderBoard() {
+                boardEl.innerHTML = '';
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const i = idx(r, c);
+                        const cell = document.createElement('div');
+                        cell.className = 'cell ' + (((r + c) % 2 === 0) ? 'light' : 'dark');
+                        cell.dataset.index = i;
+                        const p = state.board[i];
+                        if (p) cell.textContent = PIECES[p] || p;
+                        cell.addEventListener('click', onCellClick);
+                        boardEl.appendChild(cell);
+                    }
+                }
+            }
+
+            function clearHighlights() {
+                boardEl.querySelectorAll('.cell').forEach(el => { el.classList.remove('highlight', 'capture'); });
+            }
+
+            function onCellClick(e) {
+                const i = Number(e.currentTarget.dataset.index);
+                const piece = state.board[i];
+
+                // if selecting own piece
+                if (piece && ((state.turn === 'w' && isWhitePiece(piece)) || (state.turn === 'b' && isBlackPiece(piece)))) {
+                    state.selected = i; clearHighlights(); e.currentTarget.classList.add('highlight');
+                    const moves = legalMoves(i);
+                    moves.forEach(m => {
+                        const cel = boardEl.querySelector('.cell[data-index="' + m + '"]');
+                        const target = state.board[m];
+                        if (target) cel.classList.add('capture'); else cel.classList.add('highlight');
+                    });
+                    return;
+                }
+
+                // if moving selected piece to target
+                if (state.selected !== null) {
+                    const moves = legalMoves(state.selected);
+                    if (moves.includes(i)) {
+                        makeMove(state.selected, i);
+                        state.selected = null; clearHighlights(); renderBoard(); renderCaptured(); updateTurn();
+                        return;
+                    }
+                }
+
+                // otherwise clear selection
+                state.selected = null; clearHighlights();
+            }
+
+            function updateTurn() {
+                turnText.textContent = 'Turn: ' + (state.turn === 'w' ? 'White' : 'Black');
+            }
+
+            function renderCaptured() {
+                capWhite.innerHTML = state.capturedW.map(p => { const el = document.createElement('div'); el.textContent = PIECES[p]; el.title = p; return el; }).reduce((frag, el) => { frag.appendChild(el); return frag; }, document.createDocumentFragment());
+                capBlack.innerHTML = state.capturedB.map(p => { const el = document.createElement('div'); el.textContent = PIECES[p]; el.title = p; return el; }).reduce((frag, el) => { frag.appendChild(el); return frag; }, document.createDocumentFragment());
+            }
+
+            // move execution
+            function makeMove(from, to) {
+                const moving = state.board[from];
+                const target = state.board[to];
+                // handle capture
+                if (target) {
+                    if (isWhitePiece(target)) state.capturedW.push(target);
+                    else state.capturedB.push(target);
+                }
+                // move piece
+                state.board[to] = moving;
+                state.board[from] = '';
+
+                // pawn promotion (simple): if pawn reaches last rank
+                if (moving === 'P' && Math.floor(to / 8) === 0) {
+                    const promote = prompt('Promote pawn to (q,r,b,n) — default q') || 'q';
+                    const map = { q: 'Q', r: 'R', b: 'B', n: 'N' }; state.board[to] = map[promote.toLowerCase()] || 'Q';
+                }
+                if (moving === 'p' && Math.floor(to / 8) === 7) {
+                    const promote = prompt('Promote pawn to (q,r,b,n) — default q') || 'q';
+                    const map = { q: 'q', r: 'r', b: 'b', n: 'n' }; state.board[to] = map[promote.toLowerCase()] || 'q';
+                }
+
+                // switch turn
+                state.turn = (state.turn === 'w') ? 'b' : 'w';
+            }
+
+            // generate legal moves (basic, no self-check detection)
+            function legalMoves(i) {
+                const p = state.board[i]; if (!p) return [];
+                const [r, c] = coord(i);
+                const moves = [];
+                const friendlyIsWhite = isWhitePiece(p);
+
+                const pushIfEmptyOrCapture = (rr, cc) => {
+                    if (!inBoard(rr, cc)) return;
+                    const j = idx(rr, cc);
+                    const target = state.board[j];
+                    if (!target) moves.push(j);
+                    else if (isWhitePiece(target) !== friendlyIsWhite) moves.push(j);
+                };
+
+                const slide = (dr, dc) => {
+                    let rr = r + dr, cc = c + dc;
+                    while (inBoard(rr, cc)) {
+                        const j = idx(rr, cc); const t = state.board[j];
+                        if (!t) moves.push(j);
+                        else { if (isWhitePiece(t) !== friendlyIsWhite) moves.push(j); break; }
+                        rr += dr; cc += dc;
+                    }
+                };
+
+                const type = p.toLowerCase();
+                if (type === 'p') {
+                    const dir = (p === 'P') ? -1 : 1;
+                    // one step
+                    if (inBoard(r + dir, c) && !state.board[idx(r + dir, c)]) moves.push(idx(r + dir, c));
+                    // two steps from start
+                    const startRow = (p === 'P') ? 6 : 1;
+                    if (r === startRow && !state.board[idx(r + dir, c)] && !state.board[idx(r + 2 * dir, c)]) moves.push(idx(r + 2 * dir, c));
+                    // captures
+                    for (const dc of [-1, 1]) {
+                        const rr = r + dir, cc = c + dc;
+                        if (inBoard(rr, cc)) {
+                            const t = state.board[idx(rr, cc)];
+                            if (t && (isWhitePiece(t) !== isWhitePiece(p))) moves.push(idx(rr, cc));
+                        }
+                    }
+                } else if (type === 'r') {
+                    slide(1, 0); slide(-1, 0); slide(0, 1); slide(0, -1);
+                } else if (type === 'b') {
+                    slide(1, 1); slide(1, -1); slide(-1, 1); slide(-1, -1);
+                } else if (type === 'q') {
+                    slide(1, 0); slide(-1, 0); slide(0, 1); slide(0, -1); slide(1, 1); slide(1, -1); slide(-1, 1); slide(-1, -1);
+                } else if (type === 'n') {
+                    const deltas = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
+                    deltas.forEach(([dr, dc]) => { const rr = r + dr, cc = c + dc; if (inBoard(rr, cc)) { const j = idx(rr, cc); const t = state.board[j]; if (!t || isWhitePiece(t) !== friendlyIsWhite) moves.push(j); } });
+                } else if (type === 'k') {
+                    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { if (dr === 0 && dc === 0) continue; const rr = r + dr, cc = c + dc; if (inBoard(rr, cc)) pushIfEmptyOrCapture(rr, cc); }
+                }
+
+                // filter out moves that capture own piece (already handled) and optionally prevent moves leaving king in check (NOT implemented)
+                return moves;
+            }
+
+            // wire restart
+            btnRestart.addEventListener('click', () => { if (confirm('Restart game?')) setup(); });
+
+            // init
+            setup();
+
+            // expose for debugging
+            window.CHESS = { state, legalMoves };
+        })();
+    </script>
+</body>
+
+</html>
