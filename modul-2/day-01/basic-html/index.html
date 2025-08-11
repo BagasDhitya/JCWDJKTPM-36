@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCWD3504 - Basic HTML</title>
+</head>
+
+<body>
+    <!-- Heading tags -->
+    <h1>Judul utama website</h1>
+    <h2>Subjudul halaman</h2>
+    <h3>Bagian konten</h3>
+    <h4>Subbagian</h4>
+    <h5>Catatan tambahan</h5>
+    <h6>Keterangan tambahan</h6>
+
+    <!-- Paragraph, break -->
+    <p>Ini adalah paragraf pertama</p>
+    <p>Ini adalah paragraf kedua</p>
+    <p>Baris pertama <br> Baris kedua setelah break</p>
+
+    <!-- Bold, italic, strong, etc. -->
+    <b>Bold text</b><br>
+    <i>Italic text</i><br>
+    <u>Underlined text</u><br>
+    <strong>Strong text</strong><br>
+    <em>Emphasized text</em><br>
+    <mark>Highlighted text</mark><br>
+    <small>Smaller text</small><br>
+    <del>Deleted text</del><br>
+    <ins>Inserted text</ins><br>
+    <sup>Superscript</sup>
+
+    <!-- Unordered list -->
+    <h3>German cars</h3>
+    <ul style="list-style-type:circle;">
+        <li>BMW 3 Series</li>
+        <li>Mercedes-Benz C-Class</li>
+        <li>Audi A4</li>
+    </ul>
+
+    <ul style="list-style-type:square;">
+        <li>BMW 3 Series</li>
+        <li>Mercedes-Benz C-Class</li>
+        <li>Audi A4</li>
+    </ul>
+
+    <ul style="list-style-type:none;">
+        <li>BMW 3 Series</li>
+        <li>Mercedes-Benz C-Class</li>
+        <li>Audi A4</li>
+    </ul>
+
+    <!-- Ordered list -->
+    <h3>Gaming Laptops</h3>
+    <ol type="A">
+        <li>Asus ROG</li>
+        <li>Alienware</li>
+        <li>MSI Stealth</li>
+    </ol>
+    <ol type="a">
+        <li>Asus ROG</li>
+        <li>Alienware</li>
+        <li>MSI Stealth</li>
+    </ol>
+    <ol type="I">
+        <li>Asus ROG</li>
+        <li>Alienware</li>
+        <li>MSI Stealth</li>
+    </ol>
+    <ol type="i">
+        <li>Asus ROG</li>
+        <li>Alienware</li>
+        <li>MSI Stealth</li>
+    </ol>
+
+    <!-- Table tags -->
+    <table border="1">
+        <tr>
+            <th>Produk</th>
+            <th>Harga</th>
+        </tr>
+        <tr>
+            <td>Kopi</td>
+            <td>Rp35.000</td>
+        </tr>
+    </table><br>
+
+    <!-- Column span -->
+    <table border="1">
+        <tr>
+            <th>Hari</th>
+            <th colspan="3">Kegiatan</th>
+        </tr>
+        <tr>
+            <td>Senin</td>
+            <td>Meeting</td>
+            <td>Kerja</td>
+            <td>Coding</td>
+            <td>Olahraga</td> <!--  offside karena keluar dari colspan -->
+        </tr>
+    </table><br>
+
+    <!-- Row span -->
+    <table border="2">
+        <tr>
+            <td rowspan="2">Hari</td>
+            <td rowspan="2">Agenda 1</td>
+            <td rowspan="1">Keterangan</td>
+        </tr>
+        <tr>
+            <td>Agenda 2</td>
+            <td>Agenda 3</td> <!-- offside dari row karena row span hanya 2 -->
+            <td>Agenda 4</td>
+        </tr>
+    </table><br>
+
+    <!-- Anchor tags -->
+    <a href="https://purwadhika.com/" target="_blank">Visit Website Purwadhika</a><br>
+    <a href="./target.html" target="_blank">Visit page target</a><br>
+    <a href="https://api.whatsapp.com/send/?phone=6285186029606&text=Hai%2C+Purwadhika%21+Saya+ingin+informasi+tentang+program+-+program+yang+ditawarkan.&type=phone_number&app_absent=0"
+        target="_blank">
+        Hubungi
+        Kami</a><br><br>
+
+    <!-- Image tags -->
+    <img width="200" height="200" src="https://i.pinimg.com/originals/6c/04/14/6c04148f00aa8850470a76e12e6447bc.png"
+        alt="tung tung sahur"><br><br>
+
+    <img width="200" height="200" src="../assets/bombardino-crocodilo.jpg" alt="bombardino crocodilo"><br><br>
+
+    <!-- Figure Caption tags -->
+    <figure>
+        <img width="200" height="200" src="https://i.pinimg.com/originals/93/84/3c/93843cd5b651de688a01e953a0b65f24.png"
+            alt="captain america">
+        <figcaption>
+            Captain america on the cover of his comic book
+        </figcaption>
+    </figure><br><br>
+
+    <figure>
+        <img width="200" height="200" src="https://i.pinimg.com/originals/cc/62/07/cc6207a0b48ac40a99ea4799824a459b.png"
+            alt="balerina capuccina">
+        <strong>Ballerina Capucina</strong> – A mesmerizing fusion of ballet grace and Venetian masquerade. Adorned in a
+        rich maroon and gold costume with delicate feathers and shimmering sequins, the dancer’s poised movements evoke
+        a dreamlike world of elegance and theatrical charm.
+    </figure>
+
+</body>
+
+</html>
