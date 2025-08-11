@@ -1,0 +1,212 @@
+body {
+    margin: 30px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.position-container {
+    position: relative;
+    height: 300px; 
+    border: 2px dashed #aaa;
+    margin-top: 20px;
+}
+
+.static-box {
+    position: static;
+    background-color: #ccc;
+    padding:10px;
+}
+
+.relative-box {
+    position: relative;
+    left:30px;
+    top:10px;
+    background-color: lightblue;
+    padding:10px;
+}
+
+.absolute-box {
+    position: absolute;
+    top:20px;
+    right:20px;
+    background-color:orange;
+    padding:10px;
+}
+
+/* untuk melihat efek sticky, harus modif height dari position-contianer */
+.sticky-box {
+    position:sticky;
+    top:10px;
+    background-color:brown;
+    color:white;
+    padding:10px;
+}
+
+.fixed-box {
+    position:fixed;
+    top:20px;
+    right:20px;
+    background-color: yellow;
+    padding:10px;
+    color:black
+}
+
+.responsive-box {
+    background-color: #efefef;
+    padding:20px;
+    text-align:center;
+    font-weight:bold;
+    font-size:18px;
+    border:2px solid #aaa;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    padding: 15px;
+}
+
+.grid-item {
+    background-color: #e2e2e2;
+    border: 1px solid black;
+    padding:20px;
+    text-align: center;
+}
+
+.grid-rows {
+    display: grid;
+    grid-template-rows: 100px 50px 150px;
+    gap:20px;
+}
+
+.grid-cols {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap:20px;
+}
+
+.justify-demo {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:20px;
+    justify-items: center;
+    background-color:#ddd;
+    padding:20px;
+}
+
+.justify-start {
+    justify-items: start;
+}
+
+.justify-center {
+    justify-items: center;
+}
+
+.justify-end {
+    justify-items: end;
+}
+
+.justify-stretch {
+    justify-items: stretch;
+}
+
+.item {
+    background-color: #ffff;
+    border:2px solid #999;
+    padding:20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.flex-container {
+    display: flex;
+    gap:20px;
+    background-color: #e0e0e0;
+    padding:20px;
+    flex-wrap: nowrap;
+}
+
+.flex-item {
+    background-color: #ffff;
+    border:2px solid #999;
+    padding:20px;
+    text-align: center;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.column-reverse {
+    flex-direction: column-reverse;
+}
+
+/* Desktop - width >= 1025px */
+@media(min-width:1025px){
+    .responsive-box {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+}
+
+/* Tablet - width 768px - 1024px */
+@media(min-width:768px) and (max-width:1024px){
+    .responsive-box {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+}
+
+/* Smartphone - width < 767px */
+@media(min-width:561px) and (max-width:767px){
+    .responsive-box {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+}
+
+/* Smaller devices - width 560px */
+@media(max-width:560px){
+  .grid-container {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+}

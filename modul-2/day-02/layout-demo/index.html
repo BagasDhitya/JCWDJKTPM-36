@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Demo: Position, Media Queries, Grid</title>
+</head>
+
+<body>
+    <section>
+        <h2>CSS Position</h2>
+        <div class="position-container">
+            <div class="static-box">Static (default)</div>
+            <div class="relative-box">Relative</div>
+            <div class="absolute-box">Absolute (relative to container)</div>
+            <div class="sticky-box">Sticky (melekat saat scroll)</div>
+            <div class="fixed-box">Fixed (selalu di pojok kanan atas)</div>
+        </div>
+    </section>
+    <section>
+        <h2>Media Queries</h2>
+        <div class="responsive-box">
+            Coba resize layar untuk melihat perubahan warna
+        </div>
+        <ul>
+            <li>
+                <strong>Smartphone</strong> : max-width:767px
+                <strong>Tablet</strong> : min-width:768px & max-width:1024px
+                <strong>Desktop</strong> : min-width:1025px
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Grid: Customize Column</h2>
+        <div class="grid-container">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+        </div>
+    </section>
+    <section>
+        <h2>Grid: Template Row</h2>
+        <div class="grid-rows">
+            <div class="grid-item">Row 1 (100px)</div>
+            <div class="grid-item">Row 2 (50px)</div>
+            <div class="grid-item">Row 3 (150px)</div>
+        </div>
+    </section>
+    <section>
+        <h2>Grid: Template Columns</h2>
+        <div class="grid-cols">
+            <div class="grid-item">1fr</div>
+            <div class="grid-item">2fr</div>
+            <div class="grid-item">1fr</div>
+        </div>
+    </section>
+    <section>
+        <h2>Grid: Justify Items</h2>
+        <h3>a. justify-items: start</h3>
+        <div class="justify-demo justify-start">
+            <div class="item">Start</div>
+            <div class="item">Start</div>
+            <div class="item">Start</div>
+        </div>
+        <h3>b. justify-items: center</h3>
+        <div class="justify-demo justify-center">
+            <div class="item">Center</div>
+            <div class="item">Center</div>
+            <div class="item">Center</div>
+        </div>
+        <h3>c. justify-items: end</h3>
+        <div class="justify-demo justify-end">
+            <div class="item">End</div>
+            <div class="item">End</div>
+            <div class="item">End</div>
+        </div>
+        <h3>d. justify-items: stretch</h3>
+        <div class="justify-demo justify-stretch">
+            <div class="item">Stretch</div>
+            <div class="item">Stretch</div>
+            <div class="item">Stretch</div>
+        </div>
+    </section>
+    <section>
+        <h2>Flex Direction</h2>
+        <h3>a. Row (default)</h3>
+        <div class="flex-container row">
+            <div class="flex-item">A</div>
+            <div class="flex-item">B</div>
+            <div class="flex-item">C</div>
+        </div>
+        <h3>b. Row Reverse</h3>
+        <div class="flex-container row-reverse">
+            <div class="flex-item">A</div>
+            <div class="flex-item">B</div>
+            <div class="flex-item">C</div>
+        </div>
+        <h3>C. Column</h3>
+        <div class="flex-container column">
+            <div class="flex-item">A</div>
+            <div class="flex-item">B</div>
+            <div class="flex-item">C</div>
+        </div>
+        <h3>C. Column Reverse</h3>
+        <div class="flex-container column-reverse">
+            <div class="flex-item">A</div>
+            <div class="flex-item">B</div>
+            <div class="flex-item">C</div>
+        </div>
+    </section>
+</body>
+
+</html>
