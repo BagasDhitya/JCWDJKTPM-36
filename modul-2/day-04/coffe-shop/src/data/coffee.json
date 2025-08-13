@@ -1,0 +1,44 @@
+[
+  {
+    "id_coffe": "coffee-001",
+    "title": "Espresso Classic",
+    "image": "https://i.pinimg.com/1200x/74/f6/9c/74f69c6e2225d57aa52b0bb3efc0ebb8.jpg",
+    "description": "Strong and aromatic espresso made from premium Arabica beans, perfect for a quick energy boost.",
+    "price": 3.5
+  },
+  {
+    "id_coffe": "coffee-002",
+    "title": "Cappuccino Delight",
+    "image": "https://i.pinimg.com/736x/db/d2/94/dbd294d586c3278af26b3073b400de57.jpg",
+    "description": "Creamy cappuccino with a perfect balance of espresso, steamed milk, and foam, topped with cocoa powder.",
+    "price": 4.75
+  },
+  {
+    "id_coffe": "coffee-003",
+    "title": "Iced Caramel Latte",
+    "image": "https://i.pinimg.com/736x/ae/82/c2/ae82c26cce239b1db420816b9c8a945c.jpg",
+    "description": "Refreshing cold latte with rich espresso, milk, and sweet caramel syrup over ice.",
+    "price": 5.25
+  },
+  {
+    "id_coffe": "coffee-004",
+    "title": "Mocha Chocolate",
+    "image": "https://i.pinimg.com/1200x/f1/4e/70/f14e7007806beed9f34ff9cf733e5e52.jpg",
+    "description": "Delicious combination of espresso, steamed milk, and chocolate, topped with whipped cream.",
+    "price": 4.95
+  },
+  {
+    "id_coffe": "coffee-005",
+    "title": "Vanilla Latte",
+    "image": "https://i.pinimg.com/1200x/3a/ad/0d/3aad0de641dd29784b8dd33c27a55545.jpg",
+    "description": "Smooth latte infused with sweet vanilla flavor, perfect for those who enjoy a subtle sweetness.",
+    "price": 4.5
+  },
+  {
+    "id_coffe": "coffee-006",
+    "title": "Cold Brew",
+    "image": "https://i.pinimg.com/1200x/b9/74/de/b974de737a3b781bb3cc59d7d82069b3.jpg",
+    "description": "Smooth and less acidic coffee brewed slowly in cold water for 12 hours, served over ice.",
+    "price": 4.25
+  }
+]
