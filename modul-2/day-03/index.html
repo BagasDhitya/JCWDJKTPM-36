@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+
+<body>
+    <h1>Hello World</h1>
+    <p id="paragraph">This is a paragraph</p>
+    <button id="change-button">Change title</button><br><br>
+
+    <label for="name-input">Type your name</label><br><br>
+    <input type="text" id="name-input" placeholder="Enter your name ...">
+    <p id="output-text">Your name will appear here ...</p>
+
+    <script>
+        // mengambil id dari elemen p dan button
+        const title = document.getElementById('paragraph')
+        const button = document.getElementById('change-button')
+
+        // mengambil elemen dari input dan output
+        const nameInput = document.getElementById('name-input')
+        const outputText = document.getElementById('output-text')
+
+        // tambahkan event listener ketika user mengetik
+        nameInput.addEventListener('input', () => {
+
+            const value = nameInput.value.trim()
+
+            if (value) {
+                outputText.textContent = `Hello, ${value}`
+            } else {
+                outputText.textContent = 'Your name will appear here ...'
+            }
+        })
+
+        // saat tombol diklik, ubah tag paragraph
+        button.addEventListener('click', () => {
+            alert('Paragraph has changed! Please check this out!')
+            title.textContent = 'Title has changed'
+
+            if (title) {
+                title.textContent = 'Title has changed'
+            } else {
+                title.textContent = 'This is a paragraph'
+            }
+        })
+
+    </script>
+</body>
+
+</html>
+
+
+<!-- DOM Tree -->
+<!-- Document
+    html                                html
+        head                                 head
+            title                               title
+        body                                 body
+            h1
+            p
+            script -->

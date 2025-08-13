@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: brown;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    color: white
+}
