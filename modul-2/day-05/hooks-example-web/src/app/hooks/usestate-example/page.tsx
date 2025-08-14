@@ -1,6 +1,8 @@
 'use client'
 import { useState } from "react"
 import data from '@/data/shoppings.json'
+import { useTheme } from "@/context/ThemeContext"
+import { useRouter } from "next/navigation"
 
 interface IShopping {
     id: number,
@@ -10,6 +12,12 @@ interface IShopping {
 }
 
 export default function UseStateExample() {
+
+    // define router
+    const router = useRouter()
+
+    // pemanggilan theme context
+    const { isDarkMode, toggleTheme } = useTheme()
 
     // contoh 1 : counting system
     const [count, setCount] = useState<number>(0)
@@ -50,7 +58,7 @@ export default function UseStateExample() {
     }
 
     return (
-        <div className={`container mx-auto py-8 space-y-12 ${mode === false ? 'bg-white' : 'bg-black'}`}>
+        <div className={`container mx-auto py-8 space-y-12 ${isDarkMode === false ? 'bg-white' : 'bg-black'}`}>
             <h1 className="text-3xl font-bold text-center mb-8">React Hooks Demo</h1>
 
             <section className="space-y-4">
@@ -140,9 +148,10 @@ export default function UseStateExample() {
                 <div className="p-6 space-y-8 bg-gray-50 rounded-lg shadow">
                     <h2 className="text-2xl font-bold text-blue-600">Dark/Light Mode</h2>
                     <button
-                        onClick={() => setMode(!mode)}
-                        className={`${mode === false ? 'bg-white text-black' : 'bg-black text-white'} p-3 rounded font-semibold`}
-                    >{mode === false ? 'Light Mode' : 'Dark Mode'}</button>
+                        onClick={toggleTheme}
+                        className={`${isDarkMode === false ? 'bg-white text-black' : 'bg-black text-white'} p-3 rounded font-semibold`}
+                    >{isDarkMode === false ? 'Light Mode' : 'Dark Mode'}</button>
+                    <button onClick={() => router.push('/hooks/useeffect-example')}>Navigate to useeffect-example</button>
                 </div>
             </section>
         </div>
