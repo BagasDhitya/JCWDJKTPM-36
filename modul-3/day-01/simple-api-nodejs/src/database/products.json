@@ -1,0 +1,32 @@
+[
+  {
+    "id": "p001",
+    "title": "Apple iPhone 15 Pro Max 256GB",
+    "image": "https://example.com/images/iphone-15-pro-max.jpg",
+    "price": 18990000
+  },
+  {
+    "id": "p002",
+    "title": "Samsung Galaxy S24 Ultra 512GB",
+    "image": "https://example.com/images/galaxy-s24-ultra.jpg",
+    "price": 17999000
+  },
+  {
+    "id": "p003",
+    "title": "Sony WH-1000XM5 Wireless Headphones",
+    "image": "https://example.com/images/sony-wh-1000xm5.jpg",
+    "price": 5799000
+  },
+  {
+    "id": "p004",
+    "title": "Asus ROG Zephyrus G14 Gaming Laptop",
+    "image": "https://example.com/images/asus-rog-zephyrus-g14.jpg",
+    "price": 23999000
+  },
+  {
+    "id": "p005",
+    "title": "Logitech MX Master 3S Wireless Mouse",
+    "image": "https://example.com/images/logitech-mx-master-3s.jpg",
+    "price": 1499000
+  }
+]
