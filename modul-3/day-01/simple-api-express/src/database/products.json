@@ -28,5 +28,11 @@
     "title": "Logitech MX Master 3S Wireless Mouse",
     "image": "https://example.com/images/logitech-mx-master-3s.jpg",
     "price": 1499000
+  },
+  {
+    "id": "p006",
+    "title": "Indomie Goreng Jumbo",
+    "image": "https://i.pinimg.com/1200x/cc/b3/c2/ccb3c2d93b291e474986b26120a4e726.jpg",
+    "price": 2500
   }
 ]
