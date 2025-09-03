@@ -16,6 +16,7 @@ export class ProductController {
         this.getById = this.getById.bind(this)
         this.create = this.create.bind(this)
         this.update = this.update.bind(this)
+        this.delete = this.delete.bind(this)
     }
 
     public create(req: Request, res: Response) {
@@ -67,13 +68,39 @@ export class ProductController {
         }
     }
 
+    public delete(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            this.productService.delete(Number(id))
+
+            res.status(200).send({
+                message: 'success',
+                detail: 'Successfully delete product'
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'failure',
+                detail: 'Internal server error'
+            })
+        }
+    }
+
     public getAll(req: Request, res: Response) {
         try {
-            const response = this.productService.getAll()
+
+            const { search, sort, category } = req.query // ambil query
+
+            const response = this.productService.getAll({
+                search: search as string, // search berdasarkan nama produk
+                sort: sort as 'asc' | 'desc', // sort berdasarkan harga produk
+                category: category as string // filter berdasarkan kategori produk
+            })
+
             res.status(200).send({
                 message: 'success',
                 data: response
             })
+
         } catch (error) {
             res.status(500).send({
                 message: 'failure',

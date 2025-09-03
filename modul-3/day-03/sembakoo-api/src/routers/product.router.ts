@@ -21,6 +21,8 @@ class ProductRouter {
 
         this.router.post('/products', this.controller.create)
         this.router.put('/products/:id', this.controller.update)
+
+        this.router.delete('/products/:id', this.controller.delete)
     }
 }
 

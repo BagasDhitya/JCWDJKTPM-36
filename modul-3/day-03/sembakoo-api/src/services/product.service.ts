@@ -4,6 +4,7 @@
 
 import { ProductDTO } from "../dto/product.dto";
 import data from '../database/products.json'
+import { synonyms } from "../helpers/translator.helpers";
 
 import fs from 'fs'
 import path from 'path'
@@ -93,8 +94,39 @@ export class ProductService {
         return true
     }
 
-    public getAll(): ProductDTO[] {
-        return this.products
+    public getAll(options?: { search?: string, sort?: 'asc' | 'desc', category?: string }): ProductDTO[] {
+        let products = this.loadProducts()
+
+        // search by title
+        if (options?.search) {
+            const keyword = options.search.toLowerCase();
+
+            // cari sinonim yang cocok
+            const extraKeywords = Object.entries(synonyms)
+                .filter(([_, values]) => values.includes(keyword))
+                .map(([key]) => key);
+
+            const keywords = [keyword, ...extraKeywords];
+
+            products = products.filter((p) =>
+                keywords.some((k) => p.title.toLowerCase().includes(k))
+            );
+        }
+
+        // filter by category
+        if (options?.category) {
+            const normalize = (str: string) => str.toLowerCase().replace(/\s+/g, "");
+            const targetCategory = normalize(options.category);
+
+            products = products.filter((p) => normalize(p.category!) === targetCategory);
+        }
+
+        // sort by price
+        if (options?.sort) {
+            products = products.sort((a, b) => options.sort === 'asc' ? a.price - b.price : b.price - a.price)
+        }
+
+        return products
     }
 
     public getById(id: number): ProductDTO | undefined {

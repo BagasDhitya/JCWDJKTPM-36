@@ -101,11 +101,101 @@
   },
   {
     "id": 11,
-    "title": "Minyak Goreng Kelapa Sawit Premium 2L",
-    "image": "https://example.com/images/minyak-goreng-premium.jpg",
-    "price": 35000,
+    "title": "Kopi Bubuk Hitam 200gr",
+    "image": "https://example.com/images/kopi-bubuk.jpg",
+    "price": 22000,
+    "stock": 70,
+    "category": "Minuman",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 12,
+    "title": "Teh Celup 50 pcs",
+    "image": "https://example.com/images/teh-celup.jpg",
+    "price": 15000,
+    "stock": 85,
+    "category": "Minuman",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 13,
+    "title": "Sarden Kaleng 425gr",
+    "image": "https://example.com/images/sarden.jpg",
+    "price": 26000,
     "stock": 50,
-    "category": "Minyak Goreng",
+    "category": "Makanan Kaleng",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 14,
+    "title": "Kecap Manis 600ml",
+    "image": "https://example.com/images/kecap-manis.jpg",
+    "price": 27000,
+    "stock": 80,
+    "category": "Bumbu Dapur",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 15,
+    "title": "Saus Tomat 300ml",
+    "image": "https://example.com/images/saus-tomat.jpg",
+    "price": 14000,
+    "stock": 90,
+    "category": "Bumbu Dapur",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 16,
+    "title": "Keju Cheddar 200gr",
+    "image": "https://example.com/images/keju-cheddar.jpg",
+    "price": 27000,
+    "stock": 40,
+    "category": "Produk Susu",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 17,
+    "title": "Tisu Gulung 10 Roll",
+    "image": "https://example.com/images/tisu-gulung.jpg",
+    "price": 35000,
+    "stock": 55,
+    "category": "Kebutuhan Rumah Tangga",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 18,
+    "title": "Sabun Mandi Cair 450ml",
+    "image": "https://example.com/images/sabun-mandi.jpg",
+    "price": 25000,
+    "stock": 65,
+    "category": "Kebutuhan Rumah Tangga",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 19,
+    "title": "Shampoo Anti Ketombe 340ml",
+    "image": "https://example.com/images/shampoo.jpg",
+    "price": 32000,
+    "stock": 50,
+    "category": "Kebutuhan Rumah Tangga",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 20,
+    "title": "Sabun Cuci Piring 750ml",
+    "image": "https://example.com/images/sabun-cuci-piring.jpg",
+    "price": 18000,
+    "stock": 100,
+    "category": "Kebutuhan Rumah Tangga",
     "created_at": "2025-09-03T09:00:00Z",
     "updated_at": null
   }

@@ -7,5 +7,8 @@ export interface ProductDTO {
     title: string,
     image: string,
     price: number,
-    stock: number
+    stock: number,
+    category?: string,
+    created_at?: string,
+    updated_at?: string | null
 }
