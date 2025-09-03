@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "title": "Beras Pandan Wangi 5kg",
+    "image": "https://example.com/images/beras-pandan-wangi.jpg",
+    "price": 65000,
+    "stock": 45,
+    "category": "Beras",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 2,
+    "title": "Minyak Goreng Kelapa Sawit 2L",
+    "image": "https://example.com/images/minyak-goreng.jpg",
+    "price": 28000,
+    "stock": 78,
+    "category": "Minyak Goreng",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 3,
+    "title": "Gula Pasir Kristal Putih 1kg",
+    "image": "https://example.com/images/gula-pasir.jpg",
+    "price": 14500,
+    "stock": 120,
+    "category": "Gula",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 4,
+    "title": "Tepung Terigu Segitiga Biru 1kg",
+    "image": "https://example.com/images/tepung-terigu.jpg",
+    "price": 12500,
+    "stock": 95,
+    "category": "Tepung",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 5,
+    "title": "Telur Ayam Ras Segar (1kg)",
+    "image": "https://example.com/images/telur-ayam.jpg",
+    "price": 26000,
+    "stock": 60,
+    "category": "Telur",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 6,
+    "title": "Garam Meja Refina 500gr",
+    "image": "https://example.com/images/garam-meja.jpg",
+    "price": 8000,
+    "stock": 150,
+    "category": "Garam",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 7,
+    "title": "Mie Instan Rendang Kuah 1 dus (40 bungkus)",
+    "image": "https://example.com/images/mie-instan.jpg",
+    "price": 135000,
+    "stock": 25,
+    "category": "Mie Instan",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 8,
+    "title": "Kacang Hijau Kupas 500gr",
+    "image": "https://example.com/images/kacang-hijau.jpg",
+    "price": 18500,
+    "stock": 40,
+    "category": "Kacang-kacangan",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 9,
+    "title": "Mentega Tawar 200gr",
+    "image": "https://example.com/images/mentega-tawar.jpg",
+    "price": 12500,
+    "stock": 65,
+    "category": "Mentega",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 10,
+    "title": "Susu Bubuk Full Cream 400gr",
+    "image": "https://example.com/images/susu-bubuk.jpg",
+    "price": 48500,
+    "stock": 35,
+    "category": "Susu",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": 11,
+    "title": "Minyak Goreng Kelapa Sawit Premium 2L",
+    "image": "https://example.com/images/minyak-goreng-premium.jpg",
+    "price": 35000,
+    "stock": 50,
+    "category": "Minyak Goreng",
+    "created_at": "2025-09-03T09:00:00Z",
+    "updated_at": null
+  }
+]
