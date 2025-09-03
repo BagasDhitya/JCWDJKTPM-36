@@ -94,7 +94,7 @@ export class ProductService {
         return true
     }
 
-    public getAll(options?: { search?: string, sort?: 'asc' | 'desc', category?: string }): ProductDTO[] {
+    public getAll(options?: { search?: string, sort?: 'asc' | 'desc', category?: string, page?: number, limit?: number }): any {
         let products = this.loadProducts()
 
         // search by title
@@ -126,7 +126,21 @@ export class ProductService {
             products = products.sort((a, b) => options.sort === 'asc' ? a.price - b.price : b.price - a.price)
         }
 
-        return products
+        // pagination
+        const page = options?.page && options?.page > 0 ? options.page : 1
+        const limit = options?.limit && options?.limit > 0 ? options.limit : 10
+        const total = products.length
+        const totalPages = Math.ceil(total / limit)
+
+        const startIndex = (page - 1) * limit
+        const paginated = products.slice(startIndex, startIndex + limit)
+
+        return {
+            data: paginated,
+            total: total,
+            page: page,
+            totalPages: totalPages
+        }
     }
 
     public getById(id: number): ProductDTO | undefined {

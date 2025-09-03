@@ -88,12 +88,14 @@ export class ProductController {
     public getAll(req: Request, res: Response) {
         try {
 
-            const { search, sort, category } = req.query // ambil query
+            const { search, sort, category, page, limit } = req.query // ambil query
 
             const response = this.productService.getAll({
                 search: search as string, // search berdasarkan nama produk
                 sort: sort as 'asc' | 'desc', // sort berdasarkan harga produk
-                category: category as string // filter berdasarkan kategori produk
+                category: category as string, // filter berdasarkan kategori produk
+                page: page ? Number(page) : undefined, // untuk menampilkan setiap page
+                limit: limit ? Number(limit) : undefined
             })
 
             res.status(200).send({

@@ -9,6 +9,7 @@ export interface ProductDTO {
     price: number,
     stock: number,
     category?: string,
+    pagination?: number,
     created_at?: string,
     updated_at?: string | null
 }
