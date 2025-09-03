@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express'
 import ProductRouter from './routers/product.router'
 
+import { apiLogger } from './helpers/logging.helpers'
+
 class App {
     private app: Application // instance utama dari express
     private port: number // port server
@@ -16,6 +18,7 @@ class App {
     // method untuk mendaftarkan middleware global
     private middlewares(): void {
         this.app.use(express.json()) // supaya bisa parsing JSONs
+        this.app.use(apiLogger)
     }
 
     // method untuk mendaftarkan semua route endpoint
