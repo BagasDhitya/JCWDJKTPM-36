@@ -1,9 +1,10 @@
 // Controller -> menghubungkan request (dari router) dengan service
 // bertugas parsing request, memanggil service, dan mengirim response
 
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { ProductService } from "../services/product.service";
 import { ProductDTO } from "../dto/product.dto";
+import { AppError } from "../helpers/globalError.helpers";
 
 export class ProductController {
     private productService: ProductService
@@ -19,118 +20,87 @@ export class ProductController {
         this.delete = this.delete.bind(this)
     }
 
-    public create(req: Request, res: Response) {
-        try {
-            const { title, image, price, stock }: Partial<ProductDTO> = req.body
-
-            // validasi body request sebelum dikirim ke service
-            if (!title || !image || !price || !stock) {
-                return res.status(400).send({
-                    message: 'Missing required fields. Please check again'
-                })
-            }
-
-            // masukkan body request ke service
-            const newProduct = this.productService.create({ title, image, price, stock })
-            res.status(201).send({
-                message: 'success',
-                data: newProduct
-            })
-        } catch (error) {
-            res.status(500).send({
-                message: 'failure',
-                detail: 'Internal server error'
-            })
+    public create(req: Request, res: Response, next: NextFunction) {
+        const { title, image, price, stock }: Partial<ProductDTO> = req.body
+        // validasi body request sebelum dikirim ke service
+        if (!title || !image || !price || !stock) {
+            return next(new AppError('Missing required fields', 400))
         }
+
+        // masukkan body request ke service
+        const newProduct = this.productService.create({ title, image, price, stock })
+        res.status(201).send({
+            message: 'success',
+            data: newProduct
+        })
     }
 
-    public update(req: Request, res: Response) {
-        try {
-            const { id } = req.params
-            const { title, image, price, stock }: Partial<ProductDTO> = req.body
+    public update(req: Request, res: Response, next: NextFunction) {
 
-            const updatedProduct = this.productService.update(Number(id), { title, image, price, stock })
+        const { id } = req.params
+        const { title, image, price, stock }: Partial<ProductDTO> = req.body
 
-            // validasi jika id product tidak ditemukan, dan data tidak bisa diupdate
-            if (!updatedProduct) {
-                res.status(404).send({ message: 'Product not found' })
-            }
+        const updatedProduct = this.productService.update(Number(id), { title, image, price, stock })
 
-            res.status(200).send({
-                message: 'success',
-                detail: 'Successfully update product'
-            })
-        } catch (error) {
-            res.status(500).send({
-                message: 'failure',
-                detail: 'Internal server error'
-            })
+        // validasi jika id product tidak ditemukan, dan data tidak bisa diupdate
+        if (!updatedProduct) {
+            return next(new AppError('Product not found', 404))
         }
+
+        res.status(200).send({
+            message: 'success',
+            detail: 'Successfully update product'
+        })
     }
 
-    public delete(req: Request, res: Response) {
-        try {
-            const { id } = req.params
-            this.productService.delete(Number(id))
+    public delete(req: Request, res: Response, next: NextFunction) {
+        const { id } = req.params
 
-            res.status(200).send({
-                message: 'success',
-                detail: 'Successfully delete product'
-            })
-        } catch (error) {
-            res.status(500).send({
-                message: 'failure',
-                detail: 'Internal server error'
-            })
+        if (!id) {
+            return next(new AppError('Product not found', 404))
         }
+
+        this.productService.delete(Number(id))
+        res.status(200).send({
+            message: 'success',
+            detail: 'Successfully delete product'
+        })
     }
 
-    public getAll(req: Request, res: Response) {
-        try {
+    public getAll(req: Request, res: Response, next: NextFunction) {
+        const { search, sort, category, page, limit } = req.query // ambil query
 
-            const { search, sort, category, page, limit } = req.query // ambil query
+        const response = this.productService.getAll({
+            search: search as string, // search berdasarkan nama produk
+            sort: sort as 'asc' | 'desc', // sort berdasarkan harga produk
+            category: category as string, // filter berdasarkan kategori produk
+            page: page ? Number(page) : undefined, // untuk menampilkan setiap page
+            limit: limit ? Number(limit) : undefined
+        })
 
-            const response = this.productService.getAll({
-                search: search as string, // search berdasarkan nama produk
-                sort: sort as 'asc' | 'desc', // sort berdasarkan harga produk
-                category: category as string, // filter berdasarkan kategori produk
-                page: page ? Number(page) : undefined, // untuk menampilkan setiap page
-                limit: limit ? Number(limit) : undefined
-            })
-
-            res.status(200).send({
-                message: 'success',
-                data: response
-            })
-
-        } catch (error) {
-            res.status(500).send({
-                message: 'failure',
-                detail: 'Internal server error'
-            })
+        if (response.data.length <= 0) {
+            return next(new AppError('No data available', 404))
         }
+
+        res.status(200).send({
+            message: 'success',
+            data: response
+        })
     }
 
-    public getById(req: Request, res: Response) {
-        try {
-            const { id } = req.params
-            const product = this.productService.getById(Number(id))
+    public getById(req: Request, res: Response, next: NextFunction) {
+        const { id } = req.params
+        const product = this.productService.getById(Number(id))
 
-            // jika product tidak ditemukan
-            if (!product) {
-                return res.status(404).send({ message: 'Product not found' })
-            }
-
-            res.status(200).send({
-                message: 'success',
-                data: product
-            })
-        } catch (error) {
-            res.status(500).send({
-                message: 'failure',
-                detail: 'Internal server error'
-            })
+        // jika product tidak ditemukan
+        if (!product) {
+            return next(new AppError('Product not found', 404))
         }
+
+        res.status(200).send({
+            message: 'success',
+            data: product
+        })
     }
 }
 

@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express'
 import ProductRouter from './routers/product.router'
 
 import { apiLogger } from './helpers/logging.helpers'
+import { errorHandler } from './helpers/globalError.helpers'
 
 class App {
     private app: Application // instance utama dari express
@@ -13,6 +14,7 @@ class App {
 
         this.middlewares() // aktifkan middleware sebelum API membaca route
         this.routes() // panggil method routes() untuk mendaftarkan route nya
+        this.app.use(errorHandler)
     }
 
     // method untuk mendaftarkan middleware global
