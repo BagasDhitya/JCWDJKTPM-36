@@ -36,7 +36,6 @@ export class ProductController {
     }
 
     public update(req: Request, res: Response, next: NextFunction) {
-
         const { id } = req.params
         const { title, image, price, stock }: Partial<ProductDTO> = req.body
 
