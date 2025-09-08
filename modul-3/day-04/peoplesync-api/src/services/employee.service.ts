@@ -2,6 +2,14 @@ import { Database } from "../config/db";
 import { Pool } from "pg";
 import { EmployeeDTO } from "../dto/employee.dto";
 
+interface IFilter {
+    search?: string,
+    sort?: 'asc' | 'desc',
+    role?: string,
+    page: number,
+    limit: number
+}
+
 export class EmployeeService {
     private pool: Pool
 
@@ -10,10 +18,45 @@ export class EmployeeService {
         this.pool = db.getPool()
     }
 
-    public async getAll(): Promise<EmployeeDTO[]> {
-        const query = `SELECT * FROM employee WHERE deleted_at IS NULL ORDER BY id ASC`
-        const result = await this.pool.query(query)
-        return result.rows
+    public async getAll({ search, sort, role, page = 1, limit = 10 }: IFilter): Promise<{ data: EmployeeDTO[]; total: number }> {
+        let baseQuery = `SELECT * FROM employee WHERE deleted_at IS NULL`
+
+        const values: any[] = []
+        let paramIndex = 1
+
+        // search by name
+        if (search) {
+            baseQuery += ` AND name ILIKE $${paramIndex}`
+            values.push(`%${search}%`)
+            paramIndex++
+        }
+
+        // filter by role
+        if (role) {
+            baseQuery += ` AND role = $${paramIndex}`
+            values.push(role)
+            paramIndex++
+        }
+
+        // sort by salary
+        if (sort) {
+            baseQuery += ` ORDER BY salary ${sort.toUpperCase()}`
+        } else {
+            baseQuery += ` ORDER BY id ASC`
+        }
+
+        // hitung total data untuk pagination
+        const countQuery = `SELECT COUNT(*) FROM (${baseQuery}) AS count_table`
+        const countResult = await this.pool.query(countQuery, values)
+        const total = parseInt(countResult.rows[0].count, 10)
+
+        // pagination
+        const offset = (page - 1) * limit
+        baseQuery += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`
+        values.push(limit, offset)
+
+        const result = await this.pool.query(baseQuery, values)
+        return { data: result.rows, total }
     }
 
     public async getById(id: number): Promise<EmployeeDTO> {

@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import { Database } from './config/db'
 import { errorHandler } from './helpers/error.helper'
 import { EmployeeRouter } from './router/employee.router'
+import cors from 'cors'
 
 export class App {
     private app: Application
@@ -15,9 +16,16 @@ export class App {
         this.employeeRouter = new EmployeeRouter()
         this.port = port
 
+        this.initMiddlewares()
         this.initDatabase()
         this.initRoutes()
         this.initErrorHandler()
+    }
+
+    public initMiddlewares() {
+        this.app.use(cors({
+            origin: '*'
+        }))
     }
 
     public initErrorHandler() {

@@ -18,15 +18,24 @@ export class EmployeeController {
     }
 
     public async getAll(req: Request, res: Response): Promise<void> {
-        const employees = await this.employeeService.getAll()
+        const search = req.query.search ? String(req.query.search) : undefined
+        const sort = req.query.sort === 'asc' || req.query.sort === 'desc' ? (req.query.sort as 'asc' | 'desc') : undefined
+        const role = req.query.role ? String(req.query.role) : undefined
+        const page = req.query.page ? parseInt(String(req.query.page), 10) : 1
+        const limit = req.query.limit ? parseInt(String(req.query.limit), 10) : 10
 
-        if (!employees || employees.length === 0) {
+        const { data, total } = await this.employeeService.getAll({ search, sort, role, page, limit })
+
+        if (!data || data.length === 0) {
             throw new AppError('No employees found', 404)
         }
 
         res.status(200).send({
             message: 'success',
-            data: employees
+            total,
+            page,
+            limit,
+            data
         })
     }
 
