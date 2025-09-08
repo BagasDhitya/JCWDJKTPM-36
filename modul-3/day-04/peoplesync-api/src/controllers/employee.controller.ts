@@ -8,6 +8,13 @@ export class EmployeeController {
 
     constructor() {
         this.employeeService = new EmployeeService()
+
+        this.getAll = this.getAll.bind(this)
+        this.getById = this.getById.bind(this)
+        this.create = this.create.bind(this)
+        this.update = this.update.bind(this)
+        this.softDelete = this.softDelete.bind(this)
+        this.hardDelete = this.hardDelete.bind(this)
     }
 
     public async getAll(req: Request, res: Response): Promise<void> {
