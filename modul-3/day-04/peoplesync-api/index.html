@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Employee Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Employee Management</h1>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-4 mb-6">
+            <input id="searchInput" type="text" placeholder="Search by name or email"
+                class="px-3 py-2 border rounded-lg w-60" />
+            <select id="roleFilter" class="px-3 py-2 border rounded-lg">
+                <option value="">All Roles</option>
+                <option value="Manager">Manager</option>
+                <option value="Staff">Staff</option>
+                <option value="Intern">Intern</option>
+            </select>
+            <select id="sortSelect" class="px-3 py-2 border rounded-lg">
+                <option value="">Sort Salary</option>
+                <option value="asc">Low → High</option>
+                <option value="desc">High → Low</option>
+            </select>
+            <button onclick="applyFilters()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Apply
+            </button>
+        </div>
+
+        <!-- Create Employee -->
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Create Employee</h2>
+        <form id="createForm" class="flex flex-wrap gap-3 mb-6">
+            <input type="text" id="name" placeholder="Name" required class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="email" id="email" placeholder="Email" required class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="text" id="role" placeholder="Role" required class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="number" id="salary" placeholder="Salary" required class="px-3 py-2 border rounded-lg flex-1" />
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                Add
+            </button>
+        </form>
+
+        <!-- Table Employees -->
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Employees</h2>
+        <div class="overflow-x-auto relative">
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="absolute inset-0 bg-white/70 flex items-center justify-center hidden">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+            <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 border">ID</th>
+                        <th class="px-4 py-2 border">Name</th>
+                        <th class="px-4 py-2 border">Email</th>
+                        <th class="px-4 py-2 border">Role</th>
+                        <th class="px-4 py-2 border">Salary</th>
+                        <th class="px-4 py-2 border">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="flex justify-center items-center gap-2 mt-4"></div>
+
+        <!-- Update Employee -->
+        <h2 class="text-xl font-semibold text-gray-700 mt-6 mb-2">Update Employee</h2>
+        <form id="updateForm" class="flex flex-wrap gap-3">
+            <input type="number" id="updateId" placeholder="Employee ID" required
+                class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="text" id="updateName" placeholder="Name" class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="email" id="updateEmail" placeholder="Email" class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="text" id="updateRole" placeholder="Role" class="px-3 py-2 border rounded-lg flex-1" />
+            <input type="number" id="updateSalary" placeholder="Salary" class="px-3 py-2 border rounded-lg flex-1" />
+            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
+                Update
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8000/api/employees";
+        let currentPage = 1;
+        const limit = 5;
+
+        // Show loading spinner
+        function showLoading() {
+            document.getElementById("loadingSpinner").classList.remove("hidden");
+        }
+        function hideLoading() {
+            document.getElementById("loadingSpinner").classList.add("hidden");
+        }
+
+        async function loadEmployees(page = 1) {
+            showLoading();
+            currentPage = page;
+
+            const search = document.getElementById("searchInput").value;
+            const role = document.getElementById("roleFilter").value;
+            const sort = document.getElementById("sortSelect").value;
+
+            const query = new URLSearchParams({ page, limit });
+            if (search) query.append("search", search);
+            if (role) query.append("role", role);
+            if (sort) query.append("sort", sort);
+
+            const res = await fetch(`${API_URL}?${query.toString()}`);
+            const data = await res.json();
+
+            const tbody = document.getElementById("employeeTable");
+            tbody.innerHTML = "";
+
+            if (!data.data || data.data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-500">No employees found</td></tr>`;
+                hideLoading();
+                return;
+            }
+
+            data.data.forEach(emp => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+          <td class="border px-4 py-2">${emp.id}</td>
+          <td class="border px-4 py-2">${emp.name}</td>
+          <td class="border px-4 py-2">${emp.email}</td>
+          <td class="border px-4 py-2">${emp.role}</td>
+          <td class="border px-4 py-2">${emp.salary}</td>
+          <td class="border px-4 py-2 space-x-2">
+            <button onclick="deleteEmployee(${emp.id})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Soft Delete</button>
+            <button onclick="hardDeleteEmployee(${emp.id})" class="bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-800">Hard Delete</button>
+          </td>
+        `;
+                tbody.appendChild(row);
+            });
+
+            renderPagination(data.total, data.page, data.limit);
+            hideLoading();
+        }
+
+        // Render pagination
+        function renderPagination(total, page, limit) {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            const totalPages = Math.ceil(total / limit);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement("button");
+                btn.innerText = i;
+                btn.className =
+                    `px-3 py-1 rounded-lg ${i === page ? "bg-blue-600 text-white" : "bg-gray-200 hover:bg-gray-300"}`;
+                btn.onclick = () => loadEmployees(i);
+                pagination.appendChild(btn);
+            }
+        }
+
+        // Apply filters
+        function applyFilters() {
+            loadEmployees(1);
+        }
+
+        // Create Employee
+        document.getElementById("createForm").addEventListener("submit", async e => {
+            e.preventDefault();
+            showLoading();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const role = document.getElementById("role").value;
+            const salary = parseFloat(document.getElementById("salary").value);
+
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, role, salary })
+            });
+
+            e.target.reset();
+            loadEmployees(currentPage);
+        });
+
+        // Update Employee
+        document.getElementById("updateForm").addEventListener("submit", async e => {
+            e.preventDefault();
+            showLoading();
+
+            const id = document.getElementById("updateId").value;
+            const name = document.getElementById("updateName").value;
+            const email = document.getElementById("updateEmail").value;
+            const role = document.getElementById("updateRole").value;
+            const salary = document.getElementById("updateSalary").value;
+
+            await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, role, salary })
+            });
+
+            e.target.reset();
+            loadEmployees(currentPage);
+        });
+
+        // Soft Delete
+        async function deleteEmployee(id) {
+            showLoading();
+            await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+            loadEmployees(currentPage);
+        }
+
+        // Hard Delete
+        async function hardDeleteEmployee(id) {
+            showLoading();
+            await fetch(`${API_URL}/${id}/hard`, { method: "DELETE" });
+            loadEmployees(currentPage);
+        }
+
+        // Initial load
+        loadEmployees();
+    </script>
+</body>
+
+</html>

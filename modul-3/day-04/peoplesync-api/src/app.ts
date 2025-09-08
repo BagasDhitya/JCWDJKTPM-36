@@ -16,8 +16,8 @@ export class App {
         this.employeeRouter = new EmployeeRouter()
         this.port = port
 
-        this.initMiddlewares()
         this.initDatabase()
+        this.initMiddlewares()
         this.initRoutes()
         this.initErrorHandler()
     }
